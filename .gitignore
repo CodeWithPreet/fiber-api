@@ -7,6 +7,10 @@
 .DS_Store
 Thumbs.db
 
+
+
+
+
 # Ignore log & temp files
 *.log
 *.tmp
