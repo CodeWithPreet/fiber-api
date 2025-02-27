@@ -17,7 +17,7 @@ type DBIntance struct {
 	Db *gorm.DB
 }
 
-var DB DBIntance
+var DBI DBIntance
 
 func ConnectDB()  {
 	err := godotenv.Load(".env")
@@ -47,7 +47,7 @@ func ConnectDB()  {
 
 	DBMigation(db)
 
-	DB= DBIntance{Db: db}
+	DBI= DBIntance{Db: db}
 
 	
 }
