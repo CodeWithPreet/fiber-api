@@ -90,7 +90,7 @@ func updateUser(c *fiber.Ctx) error {
 	}
 
 	if err := findUser(uid,&user); err!= nil{
-		return c.Status(400).JSON(err.Error())
+		return c.Status(404).JSON(err.Error())
 	}
 
 	type UpdateUser struct{
@@ -108,7 +108,7 @@ func updateUser(c *fiber.Ctx) error {
 	
 }
 
-func DeleteUser(c *fiber.Ctx) error {
+func deleteUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 	var user models.User
 	uid,err:= uuid.Parse(id)
@@ -116,7 +116,7 @@ func DeleteUser(c *fiber.Ctx) error {
 		return c.Status(400).JSON("invalid UUID format")
 	}
 	if err:= findUser(uid,&user);err!=nil{
-		return c.Status(400).JSON(err.Error())
+		return c.Status(404).JSON(err.Error())
 	}
 	if err:= database.DBI.Db.Delete(&user).Error;err!=nil{
 		return c.Status(404).JSON(err.Error())
@@ -137,7 +137,7 @@ func UserControllers(app *fiber.App){
 	usersRoute.Get("/" , listUsers)
 	usersRoute.Get("/:id", getUserbyId)
 	usersRoute.Put("/:id",updateUser)
-	usersRoute.Delete("/:id",DeleteUser)
+	usersRoute.Delete("/:id",deleteUser)
 	 
 	// users
 }
