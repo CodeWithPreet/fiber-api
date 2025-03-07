@@ -14,7 +14,7 @@ type Product struct {
 }
 
 
-func createResponseProduct(productModel models.Product)  Product {
+func CreateResponseProduct(productModel models.Product)  Product {
 	return Product{
 		ID: productModel.ID,
 		Name: productModel.Name,
@@ -32,7 +32,7 @@ func createProduct(c *fiber.Ctx) error {
 	}
 	product.ID =uuid.New()
 	database.DBI.Db.Create(&product)
-	resProduct := createResponseProduct(product)
+	resProduct := CreateResponseProduct(product)
 	return c.Status(200).JSON(resProduct)
 }
 func listProducts(c*fiber.Ctx)error  {
@@ -46,7 +46,7 @@ func listProducts(c*fiber.Ctx)error  {
 
 	resProducts := []Product{}
 	for _, product := range products{
-		resProducts = append(resProducts, createResponseProduct(product))
+		resProducts = append(resProducts, CreateResponseProduct(product))
 	}
 	return c.Status(200).JSON(resProducts)
 }
@@ -76,7 +76,7 @@ func getProductById(c*fiber.Ctx)error{
 		return c.Status(404).JSON(fiber.Map{"error": "Product not found"})
 	}
 	
-	return c.Status(200).JSON(createResponseProduct(product))
+	return c.Status(200).JSON(CreateResponseProduct(product))
 }
 
 
@@ -97,7 +97,7 @@ func  deleteProduct(c* fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{
         "message": "successfully deleted",
         "code":    200,
-        "product": createResponseProduct(product),
+        "product": CreateResponseProduct(product),
     })
 }
 
@@ -124,7 +124,7 @@ func updateProduct(c *fiber.Ctx)  error{
 	product.SerialNo=updateData.SerialNo
 	database.DBI.Db.Save(&product)
 
-	return c.Status(200).JSON(createResponseProduct(product))
+	return c.Status(200).JSON(CreateResponseProduct(product))
 }
 
 

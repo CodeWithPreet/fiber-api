@@ -16,7 +16,7 @@ type User struct {
 	
 }
 
-func createResponseUser(userModel models.User) User {
+func CreateResponseUser(userModel models.User) User {
 	return User{
 		ID: userModel.ID,
 		Name: userModel.Name,
@@ -31,7 +31,7 @@ func createUser(c *fiber.Ctx) error {
 	} 
 	user.ID = uuid.New()
 	database.DBI.Db.Create(&user)
-	responseUser := createResponseUser(user)
+	responseUser := CreateResponseUser(user)
 	return c.Status(201).JSON(responseUser)
 }
 
@@ -46,7 +46,7 @@ func listUsers(c *fiber.Ctx) error{
 	}	
 	resUsers:= []User{}
 	 for _ ,user := range users { 
-		resUsers = append(resUsers, createResponseUser(user))
+		resUsers = append(resUsers, CreateResponseUser(user))
 	 }
 	return c.Status(200).JSON(resUsers)
 }
@@ -64,7 +64,7 @@ func getUserbyId(c *fiber.Ctx) error  {
 		return c.Status(400).JSON(err.Error())
 	}
 	
-	return c.Status(200).JSON(createResponseUser(user))
+	return c.Status(200).JSON(CreateResponseUser(user))
 
 	 
 	
@@ -104,7 +104,7 @@ func updateUser(c *fiber.Ctx) error {
 	user.Name =updateData.Name
 	database.DBI.Db.Save(&user)
 
-	return c.Status(200).JSON(createResponseUser(user))
+	return c.Status(200).JSON(CreateResponseUser(user))
 	
 }
 

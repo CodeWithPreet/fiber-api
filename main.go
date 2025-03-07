@@ -21,6 +21,8 @@ func setupRoutes(app *fiber.App){
 	routes.UserControllers(app)
 	//products
 	routes.ProductControllers(app)
+	//orders
+	routes.OrderControllers(app)
 
 
 }
